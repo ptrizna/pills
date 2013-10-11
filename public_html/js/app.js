@@ -18,5 +18,5 @@ require.config({
    }
 });
 
-require(["bootstrap/js/bootstrap"]);
+require(["bootstrap/js/bootstrap", "app/pills/view"]);
 
