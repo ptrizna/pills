@@ -1,14 +1,9 @@
 define(["backbone"], function(backbone){   
-   var Pill = Backbone.Model.extend({
-       defaults: function(){
-           return {
-               title: "Ibuprom Max",
-               doze: "1 pill",
-               time: new Date()
-           };
-       },
+   var Pill = Backbone.Model.extend({       
        parse: function(response){           
-           console.log(this.set);
+           this.set("title", response.title);
+           this.set("doze", response.doze);
+           this.set("time", new Date(response.time));
        }
        
    });

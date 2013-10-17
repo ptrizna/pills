@@ -1,10 +1,17 @@
 [
     {
         "title": "Ibux 400",
+        "doze": "8 pills",
         "time" : "October 12, 2013"
     },
     {
-        "title": "Activated Coal",
-        "doze": "8 pills"
+        "title": "Activated Coal",        
+        "doze": "8 pills",
+        "time" : "October 12, 2013"
+    },
+    {
+        "title": "Fuckitall",
+        "doze": "0.5l",
+        "time" : "October 15, 2013"
     }
 ]
