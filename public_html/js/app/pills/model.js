@@ -6,6 +6,9 @@ define(["backbone"], function(backbone){
                doze: "1 pill",
                time: new Date()
            };
+       },
+       parse: function(response){           
+           console.log(this.set);
        }
        
    });
