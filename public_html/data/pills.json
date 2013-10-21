@@ -10,5 +10,13 @@
     {
         "title": "Fuckitall",
         "doze": "0.5l"
+    },
+    {
+        "title": "Aspirin Cardio",
+        "doze": "1 pill"
+    },
+    {
+        "title": "Nitroglicerin",
+        "doze": "2 pills"
     }
 ]

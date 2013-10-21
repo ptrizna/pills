@@ -10,16 +10,26 @@
     </head>
     <body>
         <div class="container">
+            <div class="navbar navbar-default navbar-static-top">
+                <div class="navbar-header">
+                    <a class="navbar-brand">Pillbox</a>
+                </div>
+            </div>
             <div id="prescriptions">
-                
+                <div class="row">
+                    
+                </div>
             </div>
         </div>
-        
+
         <script type="text/template" id="pill-template">
-            <div>
-                <strong><%= title %></strong>
-                <p>Dose: <%= doze %></p>
-                
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <div class="caption">
+                    <h3><%= title %></h3>
+                    Dose: <%= doze %>
+                    </div>
+                </div>
             </div>
         </script>
     </body>

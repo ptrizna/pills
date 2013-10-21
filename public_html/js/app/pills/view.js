@@ -13,7 +13,7 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
     });
     
     var PrescriptionsView = Backbone.View.extend({
-        el: $("#prescriptions"),
+        el: $("#prescriptions div.row"),        
         
         initialize: function(){
             this.listenTo(recipes, "all", this.render);
