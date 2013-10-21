@@ -4,9 +4,17 @@ define(["backbone"], function(backbone) {
         defaults: function() {
             return {
                 title: "Pill",
-                doze: "doze"
+                doze: "doze",
+                time: new Date()
             };
+        },
+        parse: function(data){
+            if (data.time){
+                data.time = new Date(data.time);
+            }
+            return data; 
         }
+        
     });
 
     var Prescriptions = Backbone.Collection.extend({
