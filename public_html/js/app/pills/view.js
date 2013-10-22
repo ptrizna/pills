@@ -2,29 +2,25 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
     
     var recipes = new model.Prescriptions();
     
-    var PillView = Backbone.View.extend({
-        tagName: "div",
-        template: _.template($("#pill-template").html()),
-                        
-        render: function(){
-            this.$el.html(this.template(this.model));
-            return this;
-        }
-    });
-    
     var PrescriptionsView = Backbone.View.extend({
-        el: $("#prescriptions div.row"),        
-        
+        el: $("#prescriptions"),        
+        tagName: "div",
+        pillTemplate: _.template($("#pill-template").html()),
         initialize: function(){
             this.listenTo(recipes, "all", this.render);
             
             recipes.fetch();
-        },        
+        },  
+        events: {
+            "click .newpill": "opennewpillform",
+        },
+        opennewpillform: function(){
+            alert(1);
+        },
         render: function(){
-            this.$el.empty();
+            this.$el.find('#list').empty();
             for(var i = 0; i < recipes.length; i++){
-                var view = new PillView({model: recipes.toJSON()[i]});
-                this.$el.append(view.render().el);                
+                this.$el.find('#list').append(this.pillTemplate(recipes.toJSON()[i]));                
             }
         }
         
