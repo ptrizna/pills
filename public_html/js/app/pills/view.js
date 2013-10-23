@@ -8,14 +8,14 @@ define(["backbone","jquery", "app/pills/model", "app/pills/route"], function(b, 
         initialize: function(){
             //_.bindAll(this, 'render', 'close');
             //this.model.bind('change', this.render);
-            //this.model.view = this;
+            this.model.view = this;
         },
         events: {
             "click .delete": "removeone",
             "click .edit": "edititem",
         },
         removeone: function(href, i) {
-            $(this.el).remove();
+            this.model.clear();
             return false;
         },
         render: function() {
@@ -30,6 +30,7 @@ define(["backbone","jquery", "app/pills/model", "app/pills/route"], function(b, 
         initialize: function(){
             _.bindAll(this, 'addOne', 'refresh', 'render');
             recipes.bind('refresh', this.refresh);
+            recipes.bind('change', this.refresh);
             recipes.bind('add', this.addOne);
             recipes.fetch();
         },
@@ -41,7 +42,7 @@ define(["backbone","jquery", "app/pills/model", "app/pills/route"], function(b, 
             return false;
         },
         newAttributes: function() {
-            var param = {};
+            var param = {id: recipes.nextID()};
             $('.modal-body input').each(function(attr){
                 param[$(this).attr('name')] = $(this).val();
             });

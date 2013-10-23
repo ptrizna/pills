@@ -2,6 +2,7 @@ define(["backbone"], function(backbone) {
     var Pill = Backbone.Model.extend({
         defaults: function() {
             return {
+                id: null,
                 title: "Pill",
                 doze: "doze",
                 time: new Date()
@@ -14,16 +15,22 @@ define(["backbone"], function(backbone) {
             return data; 
         },
         clear: function() {
-            this.destroy();
+            this.destroy( { url: 'backend/slim/pill/' + this.id } );
             this.view.remove();
+            //backbone.emulateHTTP = true;
+            //Prescriptions.sync("delete", undefined, {"url" : "backend/", "dataType" : "json", "data" : "id=" + this.id});
         },
-        url: "backend/"
+        url: "backend/slim/pill/"
         
     });
 
     var Prescriptions = Backbone.Collection.extend({
         model: Pill,
-        url: "data/pills.json?"  + (new Date()).getTime()
+        url: "backend/slim?"  + (new Date()).getTime(),
+        nextID: function() {
+            if (!this.length) return 1;
+            return this.last().get('order') + 1;
+        }
     });
 
     return {
