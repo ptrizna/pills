@@ -1,5 +1,4 @@
 define(["backbone"], function(backbone) {
-    
     var Pill = Backbone.Model.extend({
         defaults: function() {
             return {
@@ -13,7 +12,8 @@ define(["backbone"], function(backbone) {
                 data.time = new Date(data.time);
             }
             return data; 
-        }
+        },
+        url: "backend/"
         
     });
 

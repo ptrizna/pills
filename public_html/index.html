@@ -30,7 +30,7 @@
                     </div>
                     <div class="modal-body">
                         <input type="text" name="title" placeholder="Title" value="ttt" />
-                        <input type="text" name="dose" placeholder="Dose" value="ddd" />
+                        <input type="text" name="doze" placeholder="Dose" value="ddd" />
                         <input type="text" name="time" placeholder="Time" value="4444" />
                     </div>
                     <div class="modal-footer">
@@ -55,6 +55,7 @@
                         <h3><%= item.title %></h3>
                         <p>Dose: <%= item.doze %></p>
                         <p><%= item.time %></p>
+                        <a type="button" class="btn delete" href="#" data-pid="<%= index %>">Delete</a>
                     </div>
                 </div>
             </div>

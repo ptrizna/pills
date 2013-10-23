@@ -8,19 +8,25 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
         initialize: function(){
             this.listenTo(recipes, "all", this.render);
             recipes.fetch();
-        },  
+        }, 
         events: {
             "click .add-pill": "addone",
+            "click .delete": "removeone"
         },
-        addone: function(pill) {
-            //var newPill = new model.Pill();
-            var param = {};
+        removeone: function(href, i) {
+            //console.log(href.target);
+            //recipes.remove(undefined, {index, href.data('pid')}); 
+        },
+        addone: function() {
+            var param = {}, newPill = new model.Pill();
             $('.modal-body input').each(function(attr){
-                //newPill.set($(this).attr('name'), $(this).val());
+                newPill.set($(this).attr('name'), $(this).val());
                 param[$(this).attr('name')] = $(this).val();
             });
             recipes.add(param);
             $('.modal').modal('hide');
+            newPill.toJSON();
+            newPill.save();
         },
         render: function() {
             this.$el.find('#list').empty().append(_.template($("#pill-template").html(), {recipesList: recipes.toJSON()}));
