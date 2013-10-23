@@ -1,4 +1,4 @@
-define(["backbone","jquery", "app/pills/model"], function(b, $, model){
+define(["backbone","jquery", "app/pills/model", "app/pills/route"], function(b, $, model){
 
     var recipes = new model.Prescriptions();
     
@@ -16,6 +16,7 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
         },
         removeone: function(href, i) {
             $(this.el).remove();
+            return false;
         },
         render: function() {
             this.$el.html(this.PillTemplate(this.model.toJSON()));
@@ -30,14 +31,14 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
             _.bindAll(this, 'addOne', 'refresh', 'render');
             recipes.bind('refresh', this.refresh);
             recipes.bind('add', this.addOne);
-            
             recipes.fetch();
         },
         events: {
             "click .add-pill": "addFromForm",
         },
         addFromForm: function() {
-            recipes.create(this.newAttributes())
+            recipes.create(this.newAttributes());
+            return false;
         },
         newAttributes: function() {
             var param = {};
@@ -46,7 +47,7 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
             });
             return param;
         },
-        addOne: function(pill) {    
+        addOne: function(pill){
             var OnePillView = new PillView({model: pill});
             this.$("#list").append(OnePillView.render().el);
             $('.modal').modal('hide');

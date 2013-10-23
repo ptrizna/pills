@@ -10,34 +10,46 @@
     </head>
     <body>
         <div class="container">
-            <div class="navbar navbar-default navbar-static-top">
-                <div class="navbar-header">
-                    <a class="navbar-brand">Pillbox</a>
+            <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Start</a></li>
+                        <li><a href="#view/list">List</a></li>
+                        <li><a href="#view/error">Errors</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <hr style="display: block; clear: both;" />
+            <div class="block" id="start">
+                welcome            
+            </div>
+            <div class="block" id="list">
+                <div id="prescriptions">
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <a type="button" class="btn newpill" style="width:100%;" href="#test_modal" data-toggle="modal">New</a>
+                        </div>
+                    </div>
+                    <div id="list" class="row show-grid"></div>
+                    <div class="modal fade" id="test_modal">
+                        <div class="modal-header">
+                            <a class="close" data-dismiss="modal">&times;</a>
+                            <h3>New pill</h3>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" name="title" placeholder="Title" value="ttt" />
+                            <input type="text" name="doze" placeholder="Dose" value="ddd" />
+                            <input type="text" name="time" placeholder="Time" value="4444" />
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn" data-dismiss="modal">Close</a>
+                            <a href="#" class="btn btn-primary add-pill">Add pill</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="prescriptions">
-                <div class="btn-toolbar">
-                    <div class="btn-group">
-                        <a type="button" class="btn newpill" style="width:100%;" href="#test_modal" data-toggle="modal">New</a>
-                    </div>
-                </div>
-                <div id="list" class="row show-grid"></div>
-                <div class="modal fade" id="test_modal">
-                    <div class="modal-header">
-                        <a class="close" data-dismiss="modal">&times;</a>
-                        <h3>New pill</h3>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" name="title" placeholder="Title" value="ttt" />
-                        <input type="text" name="doze" placeholder="Dose" value="ddd" />
-                        <input type="text" name="time" placeholder="Time" value="4444" />
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn" data-dismiss="modal">Close</a>
-                        <a href="#" class="btn btn-primary add-pill">Add pill</a>
-                    </div>
-                </div>
-            </div>
+            <div class="block" id="error">error</div>
         </div>
 
         <script type="text/template" id="pill-template">

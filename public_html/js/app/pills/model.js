@@ -23,7 +23,7 @@ define(["backbone"], function(backbone) {
 
     var Prescriptions = Backbone.Collection.extend({
         model: Pill,
-        url: "data/pills.json"
+        url: "data/pills.json?"  + (new Date()).getTime()
     });
 
     return {
