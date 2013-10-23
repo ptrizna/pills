@@ -13,6 +13,10 @@ define(["backbone"], function(backbone) {
             }
             return data; 
         },
+        clear: function() {
+            this.destroy();
+            this.view.remove();
+        },
         url: "backend/"
         
     });

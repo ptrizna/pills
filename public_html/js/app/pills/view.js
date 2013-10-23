@@ -1,39 +1,63 @@
 define(["backbone","jquery", "app/pills/model"], function(b, $, model){
-    
+
     var recipes = new model.Prescriptions();
     
+    var PillView = Backbone.View.extend({
+        tagName: "div",
+        PillTemplate: _.template($('#pill-template').html()),
+        initialize: function(){
+            //_.bindAll(this, 'render', 'close');
+            //this.model.bind('change', this.render);
+            //this.model.view = this;
+        },
+        events: {
+            "click .delete": "removeone",
+            "click .edit": "edititem",
+        },
+        removeone: function(href, i) {
+            $(this.el).remove();
+        },
+        render: function() {
+            this.$el.html(this.PillTemplate(this.model.toJSON()));
+            return this;
+        }
+    });
+
     var PrescriptionsView = Backbone.View.extend({
         el: $("#prescriptions"),        
         tagName: "div",
         initialize: function(){
-            this.listenTo(recipes, "all", this.render);
+            _.bindAll(this, 'addOne', 'refresh', 'render');
+            recipes.bind('refresh', this.refresh);
+            recipes.bind('add', this.addOne);
+            
             recipes.fetch();
-        }, 
+        },
         events: {
-            "click .add-pill": "addone",
-            "click .delete": "removeone"
+            "click .add-pill": "addFromForm",
         },
-        removeone: function(href, i) {
-            //console.log(href.target);
-            //recipes.remove(undefined, {index, href.data('pid')}); 
+        addFromForm: function() {
+            recipes.create(this.newAttributes())
         },
-        addone: function() {
-            var param = {}, newPill = new model.Pill();
+        newAttributes: function() {
+            var param = {};
             $('.modal-body input').each(function(attr){
-                newPill.set($(this).attr('name'), $(this).val());
                 param[$(this).attr('name')] = $(this).val();
             });
-            recipes.add(param);
-            $('.modal').modal('hide');
-            newPill.toJSON();
-            newPill.save();
+            return param;
         },
-        render: function() {
-            this.$el.find('#list').empty().append(_.template($("#pill-template").html(), {recipesList: recipes.toJSON()}));
-            return this;
+        addOne: function(pill) {    
+            var OnePillView = new PillView({model: pill});
+            this.$("#list").append(OnePillView.render().el);
+            $('.modal').modal('hide');
+        },
+        refresh: function(){
+            console.log('refresh');
+            _.each(recipes.models, function(element, list, index){
+                this.addOne(index[list]);
+            }, this);
         }
     });
-    
     var prescriptionsView = new PrescriptionsView(); 
     
     return { model: recipes };
