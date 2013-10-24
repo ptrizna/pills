@@ -83,6 +83,7 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
             $(".ingredients-list").prepend(new IngredientView({model:ingredient}).render().el);
             ingredient
         },
+
         render: function() {  
             this.$el.empty().html(this.newItemForm() + this.listItems());
         }
@@ -93,6 +94,14 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
         tagName: "li",
         template: _.template($('#item-title').html()),
         initialize: function(){
+            
+        },
+        events: {
+            "click .delete" : "removeItem"
+        },
+        removeItem: function() {
+            this.model.clear();
+            this.$el.remove();
         },
         render: function() {  
             this.$el.html(this.template(this.model.toJSON()));
