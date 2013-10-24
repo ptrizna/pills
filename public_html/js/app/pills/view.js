@@ -1,4 +1,4 @@
-define(["backbone","jquery", "app/pills/model", "app/pills/route"], function(b, $, model){
+define(["backbone","jquery", "app/pills/model"], function(b, $, model){
 
     var recipes = new model.Prescriptions();
     
@@ -39,6 +39,7 @@ define(["backbone","jquery", "app/pills/model", "app/pills/route"], function(b, 
         },
         addFromForm: function() {
             recipes.create(this.newAttributes());
+            $('.modal').modal('hide');
             return false;
         },
         newAttributes: function() {
@@ -51,17 +52,55 @@ define(["backbone","jquery", "app/pills/model", "app/pills/route"], function(b, 
         addOne: function(pill){
             var OnePillView = new PillView({model: pill});
             this.$("#list").append(OnePillView.render().el);
-            $('.modal').modal('hide');
         },
         refresh: function(){
-            console.log('refresh');
+            //console.log('refresh');
             _.each(recipes.models, function(element, list, index){
                 this.addOne(index[list]);
             }, this);
         }
+    }); 
+
+    var IngredientsView = Backbone.View.extend({
+        el: $("#list"),        
+        tagName: "div",
+        newItemForm: _.template($('#new-ingredient-form').html()),
+        listItems: _.template($('#list-ingredients').html()),
+        initialize: function(){
+            ingredients = new model.Ingredients();
+            ingredients.bind('add', this.addOne);
+            this.render();
+        },
+        events: {
+            "keypress .new-item" : "listenAdd"
+        },
+        listenAdd: function(e) {
+            if(e.which == 13) {
+                ingredients.create({ 'title': $('.new-item').val() });
+            }
+        },
+        addOne: function(ingredient) {
+            $(".ingredients-list").prepend(new IngredientView({model:ingredient}).render().el);
+            ingredient
+        },
+        render: function() {  
+            this.$el.empty().html(this.newItemForm() + this.listItems());
+        }
+        
     });
-    var prescriptionsView = new PrescriptionsView(); 
     
-    return { model: recipes };
+    var IngredientView = Backbone.View.extend({
+        tagName: "li",
+        template: _.template($('#item-title').html()),
+        initialize: function(){
+        },
+        render: function() {  
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;    
+        }
+        
+    });
+    
+    return { model: recipes, IngredientsView: IngredientsView };
     
 });

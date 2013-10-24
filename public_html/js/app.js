@@ -19,4 +19,4 @@ require.config({
    urlArgs: "bust=" + (new Date()).getTime()
 });
 
-require(["bootstrap/js/bootstrap", "app/pills/view"]);
+require(["bootstrap/js/bootstrap", "app/pills/route"]);

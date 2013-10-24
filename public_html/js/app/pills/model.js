@@ -29,13 +29,37 @@ define(["backbone"], function(backbone) {
         url: "backend/slim?"  + (new Date()).getTime(),
         nextID: function() {
             if (!this.length) return 1;
-            return this.last().get('order') + 1;
+            return _.max(this.pluck('id')) + 1;
         }
+    });
+
+    var Ingredient = Backbone.Model.extend({
+        defaults: function() {
+            return {
+                title: "New ingredient"
+            };
+        },
+        clear: function() {
+            this.destroy();
+            //this.view.remove();
+        }
+    });
+
+    
+    var Ingredients = Backbone.Collection.extend({
+        model: Ingredient,
+        url: "backend/slim888?"  + (new Date()).getTime(),
+        //nextID: function() {
+//            if (!this.length) return 1;
+//            return _.max(this.pluck('id')) + 1;
+//        }
     });
 
     return {
         Pill: Pill,
-        Prescriptions: Prescriptions
+        Prescriptions: Prescriptions,
+        Ingredient: Ingredient,
+        Ingredients: Ingredients
     };
 });
 
