@@ -1,8 +1,8 @@
 define(["backbone"], function(backbone) {
-    
     var Pill = Backbone.Model.extend({
         defaults: function() {
             return {
+                id: null,
                 title: "Pill",
                 doze: "doze",
                 time: new Date()
@@ -13,18 +13,53 @@ define(["backbone"], function(backbone) {
                 data.time = new Date(data.time);
             }
             return data; 
-        }
+        },
+        clear: function() {
+            this.destroy( { url: 'backend/slim/pill/' + this.id } );
+            this.view.remove();
+            //backbone.emulateHTTP = true;
+            //Prescriptions.sync("delete", undefined, {"url" : "backend/", "dataType" : "json", "data" : "id=" + this.id});
+        },
+        url: "backend/slim/pill/"
         
     });
 
     var Prescriptions = Backbone.Collection.extend({
         model: Pill,
-        url: "data/pills.json"
+        url: "backend/slim?"  + (new Date()).getTime(),
+        nextID: function() {
+            if (!this.length) return 1;
+            return _.max(this.pluck('id')) + 1;
+        }
+    });
+
+    var Ingredient = Backbone.Model.extend({
+        defaults: function() {
+            return {
+                title: "New ingredient"
+            };
+        },
+        clear: function() {
+            this.destroy();
+            //this.view.remove();
+        }
+    });
+
+    
+    var Ingredients = Backbone.Collection.extend({
+        model: Ingredient,
+        url: "backend/slim888?"  + (new Date()).getTime(),
+        //nextID: function() {
+//            if (!this.length) return 1;
+//            return _.max(this.pluck('id')) + 1;
+//        }
     });
 
     return {
         Pill: Pill,
-        Prescriptions: Prescriptions
+        Prescriptions: Prescriptions,
+        Ingredient: Ingredient,
+        Ingredients: Ingredients
     };
 });
 
