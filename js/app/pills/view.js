@@ -1,13 +1,11 @@
 define(["backbone","jquery", "app/pills/model"], function(b, $, model){
 
-    var recipes = new model.Prescriptions();
+    var Recipes = new model.Prescriptions();
     
     var PillView = Backbone.View.extend({
         tagName: "div",
         PillTemplate: _.template($('#pill-template').html()),
         initialize: function(){
-            //_.bindAll(this, 'render', 'close');
-            //this.model.bind('change', this.render);
             this.model.view = this;
         },
         events: {
@@ -27,23 +25,22 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
     var PrescriptionsView = Backbone.View.extend({
         el: $("#prescriptions"),        
         tagName: "div",
-        initialize: function(){
-            _.bindAll(this, 'addOne', 'refresh', 'render');
-            recipes.bind('refresh', this.refresh);
-            recipes.bind('change', this.refresh);
-            recipes.bind('add', this.addOne);
-            recipes.fetch();
+        initialize: function(){            
+            Recipes.bind('refresh', this.refresh, this);
+            Recipes.bind('change', this.refresh, this);
+            Recipes.bind('add', this.addOne, this);
+            Recipes.fetch();
         },
         events: {
             "click .add-pill": "addFromForm",
         },
         addFromForm: function() {
-            recipes.create(this.newAttributes());
+            Recipes.create(this.newAttributes());
             $('.modal').modal('hide');
             return false;
         },
         newAttributes: function() {
-            var param = {id: recipes.nextID()};
+            var param = {};
             $('.modal-body input').each(function(attr){
                 param[$(this).attr('name')] = $(this).val();
             });
@@ -54,10 +51,8 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
             this.$("#list").append(OnePillView.render().el);
         },
         refresh: function(){
-            //console.log('refresh');
-            _.each(recipes.models, function(element, list, index){
-                this.addOne(index[list]);
-            }, this);
+            this.$("#list").empty();
+            Recipes.each(this.addOne);
         }
     }); 
 
@@ -110,6 +105,6 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
         
     });
     
-    return { model: recipes, IngredientsView: IngredientsView, PrescriptionsView: PrescriptionsView };
+    return { model: Recipes, IngredientsView: IngredientsView, PrescriptionsView: PrescriptionsView };
     
 });

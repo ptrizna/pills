@@ -15,22 +15,14 @@ define(["backbone"], function(backbone) {
             return data; 
         },
         clear: function() {
-            this.destroy( { url: 'backend/slim/pill/' + this.id } );
+            this.destroy();
             this.view.remove();
-            //backbone.emulateHTTP = true;
-            //Prescriptions.sync("delete", undefined, {"url" : "backend/", "dataType" : "json", "data" : "id=" + this.id});
-        },
-        url: "backend/slim/pill/"
-        
+        }
     });
 
     var Prescriptions = Backbone.Collection.extend({
         model: Pill,
-        url: "backend/slim?"  + (new Date()).getTime(),
-        nextID: function() {
-            if (!this.length) return 1;
-            return _.max(this.pluck('id')) + 1;
-        }
+        url: "backend/slim/pills"
     });
 
     var Ingredient = Backbone.Model.extend({
@@ -41,18 +33,12 @@ define(["backbone"], function(backbone) {
         },
         clear: function() {
             this.destroy();
-            //this.view.remove();
         }
     });
 
     
     var Ingredients = Backbone.Collection.extend({
-        model: Ingredient,
-        url: "backend/slim888?"  + (new Date()).getTime(),
-        //nextID: function() {
-//            if (!this.length) return 1;
-//            return _.max(this.pluck('id')) + 1;
-//        }
+        model: Ingredient        
     });
 
     return {
