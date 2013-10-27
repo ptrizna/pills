@@ -110,6 +110,6 @@ define(["backbone","jquery", "app/pills/model"], function(b, $, model){
         
     });
     
-    return { model: recipes, IngredientsView: IngredientsView };
+    return { model: recipes, IngredientsView: IngredientsView, PrescriptionsView: PrescriptionsView };
     
 });
