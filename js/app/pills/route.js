@@ -7,7 +7,7 @@ define(["backbone", "app/pills/view"], function(backbone, views) {
             //"!/error": "error"
         },
         showpage: function (page_id) {
-            page_id = page_id || "start";
+            page_id = page_id || "start";            
             var prescriptionsView = new views.PrescriptionsView();
             $(".block").hide();
             $("#" + page_id).show();
